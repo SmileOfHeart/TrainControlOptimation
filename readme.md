@@ -1,5 +1,5 @@
 FMOPSOTrainControl:Using MOPSO algorithm to optimize traction energy consumption of subway
-
+language：MATLAB
 
 
 项目名称：基于FMOPOS算法的城轨列车牵引能耗优化
@@ -21,6 +21,8 @@ FMOPSOTrainControl:Using MOPSO algorithm to optimize traction energy consumption
 			main.m：主仿真程序
 			arginit.m ：初始化线路数据
 	
+注意运行程序时将当前文件夹下所有文件夹添加到Matlab路径
+
 	
 ![代码结构](./code_structure.png)
 		
