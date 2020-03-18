@@ -25,4 +25,12 @@ language：MATLAB
 
 	
 ![代码结构](./code_structure.png)
-		
+
+
+算法参数设置
+1.列车线路参数:arginit.m ：初始化线路数据
+
+2.FMOPSO参数：FMOPSOmain.m 初始多目标粒子群算法参数
+
+3.算法出图：CalcEJT.m 辅助参数为1时出图
+
