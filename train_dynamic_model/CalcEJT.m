@@ -184,6 +184,9 @@ end
 %最后一段制动工况
 dt=0.5*TMSTEPLEN; %加速度大，采用小步长
 state=-2;
+if CurrLoc<ENDPOINT-100
+	flag = 1; %提前停车
+end
 while(CurrLoc<ENDPOINT) 
         lastAcc=acc;
         MaxAcc=(-1*BrakeForce(CurrVeo)-AntiForce(CurrVeo,CurrLoc))/TRAINWGH;
