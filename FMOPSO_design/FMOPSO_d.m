@@ -1,6 +1,20 @@
-function [ExREP,ExChar,REPNum,gridFit,Population,Velocity,enterCountList,repNumList,avgPersonalFitnessList,avgGlobalFitnessList]=FMOPSOmain(Pop,Velo)
-%UNTITLED3 粒子群优化算法的主函数
-%
+function [ExREP,ExChar,REPNum,gridFit,Population,Velocity,enterCountList,repNumList,avgPersonalFitnessList,avgGlobalFitnessList]=FMOPSO_d(Pop,Velo)
+% 粒子群优化算法的主函数
+% 算法输入参数说明
+% Pop指定初始的粒子群种群
+% Velo指定初始的粒子群速度
+% 算法输出参数说明
+%ExREP   					%外部种群
+%ExChar  					%外部种群的特征向量
+%REPNum  					%外部种群包含的粒子数
+%gridFit 					%适应度网格，记录粒子在目标空间的分布情况
+%Population  				%粒子群算法种群
+%Velocity    				%粒子飞行速度
+%enterCountList   			%记录每一轮进入外部种群的粒子数
+%repNumList       			%记录每一轮外部种群的粒子数
+%avgPersonalFitnessList     %每一轮迭代中粒子群个体平均适应度向量
+%avgGlobalFitnessList       %每一轮迭代中外部种群的平均适应度向量
+
 global SWITCHNUM TRAVDIS;
 global setNum omiga C1 C2 MaxFlyVeo;
 global OldPopulation PBESTS PBSESTFitNess  ExternFitNess ExternPopulation RepCount fitVictorLen ExternREPCharacter iteraNum  FitNessRate %ExpSetNum
@@ -15,7 +29,8 @@ C2=2.0;    %社会加速常数
 MaxFlyVeo=2*TRAVDIS/SWITCHNUM; %最大飞行速度
 iteraNum=10; %迭代次数
 FitNessRate=1;
-enterCountList=zeros(1,iteraNum);
+enterCountList=zeros(1
+iteraNum);
 repNumList=zeros(1,iteraNum);
 avgPersonalFitnessList=[];
 avgGlobalFitnessList=[];

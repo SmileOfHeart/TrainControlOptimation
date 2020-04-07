@@ -74,7 +74,9 @@ function CacBrakeSpeedLimit()
         RightP=LeftP;
     end
     sLimitCurve=[sLimitCurve,fliplr(sPartCurve)];
-    vLimitCurve=[vLimitCurve,fliplr(vPartCurve)];     
+    vLimitCurve=[vLimitCurve,fliplr(vPartCurve)]; 
+    sLimitCurve=[sLimitCurve,startPoint(n)+100];  
+    vLimitCurve=[vLimitCurve,speedLimit(n)];  
     save('BrakeLimit.mat','sLimitCurve','vLimitCurve');
     h=figure('Name','考虑制动限速曲线');%打开新窗口
     plotSpeedLimit();
