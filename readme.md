@@ -28,14 +28,20 @@ MOPSO算法是采用Pareto最优的形式比较解的优劣的。
 代码组成：
 	1.列车运行仿真代码; 
 			./train_dynamic_model
+			
+
 	2.FMOPSO代码；
 			./FMOPSO
+
 	3.PSO代码;
 			./PSO	
-	3.算法工具
+
+	4.算法工具
 			./tool
-	4.主仿真程序
-			main.m：主仿真程序
+
+	5.主仿真程序
+			pso_main.m：采用pos算法进行优化的主仿真程序
+			mopso_main.m：采用多目标pos算法进行优化的主仿真程序
 			arginit.m ：初始化线路数据
 	
 注意运行程序时将当前文件夹下所有文件夹添加到Matlab路径
