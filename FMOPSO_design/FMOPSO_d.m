@@ -1,4 +1,4 @@
-function [ExREP,ExChar,REPNum,gridFit,Population,Velocity,enterCountList,repNumList,avgPersonalFitnessList,avgGlobalFitnessList]=FMOPSO_d(Pop,Velo)
+function [ExREP,ExChar,REPNum,gridFit,Population,Velocity,enterCountList,repNumList,avgPersonalFitnessList,avgGlobalFitnessList]=FMOPSO_d(options)
 % 粒子群优化算法的主函数
 % 算法输入参数说明
 % Pop指定初始的粒子群种群
@@ -19,7 +19,7 @@ global SWITCHNUM TRAVDIS;
 global setNum omiga C1 C2 MaxFlyVeo;
 global OldPopulation PBESTS PBSESTFitNess  ExternFitNess ExternPopulation RepCount fitVictorLen ExternREPCharacter iteraNum  FitNessRate %ExpSetNum
 %粒子群算法参数
-setNum=5;   %种群数量 
+setNum=options.PopulationSize;   %种群数量 
 %ExpSetNum=30; %外部种群种群大小
 fitVictorLen=5; %适应度向量长度
 RepCount=0;%外部种群包含的不重复解的数量
@@ -27,7 +27,7 @@ omiga=1.4;%惯性因子
 C1=2.0;     %个体加速常数
 C2=2.0;    %社会加速常数
 MaxFlyVeo=2*TRAVDIS/SWITCHNUM; %最大飞行速度
-iteraNum=10; %迭代次数
+iteraNum=options.MaxGenerations; %迭代次数
 FitNessRate=1;
 enterCountList=zeros(1,iteraNum);
 repNumList=zeros(1,iteraNum);
@@ -35,9 +35,9 @@ avgPersonalFitnessList=[];
 avgGlobalFitnessList=[];
 %%
 %产生初始种群
-if nargin==2
-    Population=Pop;
-    Velocity=Velo;
+if options.Continue == 1
+    Population=options.Pop;
+    Velocity=options.Velo;
 else
     Population=CreateInitPopulation(setNum,SWITCHNUM);  %生成种群
     Velocity=zeros(setNum,SWITCHNUM);

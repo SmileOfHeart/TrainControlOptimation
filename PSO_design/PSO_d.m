@@ -1,17 +1,21 @@
-function [res,Population,Velocity]=PSO_d(Population,Velocity)
+function [res,Population,Velocity]=PSO_d(options)
 %UNTITLED3 粒子群优化算法的主函数
 %
 global SWITCHNUM TRAVDIS;
 global setNum omiga C1 C2 MaxFlyVeo;
 %粒子群算法参数
-setNum=10;   %种群数量
-iteraNum=50;%迭代次数
+setNum=options.PopulationSize;   %种群数量 
+iteraNum=options.MaxGenerations; %迭代次数
 omiga=1.1;%惯性因子
 C1=1.5;     %个体加速常数
 C2=2;    %社会加速常数
 MaxFlyVeo=1.5*TRAVDIS/SWITCHNUM; %最大飞行速度
-if nargin~=2
-    Population=CreateInitPopulation(setNum,SWITCHNUM);
+%产生初始种群
+if options.Continue == 1
+    Population=options.Pop;
+    Velocity=options.Velo;
+else
+    Population=CreateInitPopulation(setNum,SWITCHNUM);  %生成种群
     Velocity=zeros(setNum,SWITCHNUM);
 end
 socityMaxFitPos=zeros(1,SWITCHNUM);

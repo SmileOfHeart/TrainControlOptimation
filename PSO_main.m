@@ -7,10 +7,15 @@ arginitial();
 %限速和坡度约束处理，并且保存处理结果
 CacBrakeSpeedLimit();
 [Emax,Tmin]=CacMinTime();
+
+%多目标粒子群算法参数
+options.PopulationSize = 10;  %种群大小  
+options.MaxGenerations = 10;  %算法最大迭代次数
+options.Continue = 0 ;  %是否继续原来的优化，如果要继续则要传入种群options.Pop和速度参数options.Veo
 %正式开始优化
 for num=1:1
     disp(['运行次数：',num2str(num)]);
-    [res,pos,velo]=PSO_d();
+    [res,pos,velo]=PSO_d(options);
     figure('Name','优化结果');
     [flag,Energy,Time,MissError,overSpeed,sw,jerk] = CalcEJT(res,1);
     fitness = CacFitNess(Energy,Time,MissError,overSpeed,jerk);
