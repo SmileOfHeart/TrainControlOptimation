@@ -9,8 +9,7 @@ CacBrakeSpeedLimit();
 [Emax,Tmin]=CacMinTime();
 for num=1:1
 %正式开始优化
-
-[ExREP,ExChar,REPNum,gridFit,Population,Velocity,enterCountList,repNumList,avgPersonalFitnessList,GobalFitNessList]=FMOPSOmain();
+[ExREP,ExChar,REPNum,gridFit,Population,Velocity,enterCountList,repNumList,avgPersonalFitnessList,GobalFitNessList]=FMOPSO_d();
 % for i=1:REPNum
 %     [flag,Energy,Time,MissError] = CalcEJT(ExREP(i,:),2);
 %     disp(['运行能耗：',num2str(Energy),'  运行时间：',num2str(Time),'  停车误差：',num2str(MissError)])

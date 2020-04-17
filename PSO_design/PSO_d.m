@@ -4,7 +4,7 @@ function [res,Population,Velocity]=PSO_d(Population,Velocity)
 global SWITCHNUM TRAVDIS;
 global setNum omiga C1 C2 MaxFlyVeo;
 %粒子群算法参数
-setNum=20;   %种群数量
+setNum=10;   %种群数量
 iteraNum=50;%迭代次数
 omiga=1.1;%惯性因子
 C1=1.5;     %个体加速常数
@@ -29,8 +29,6 @@ for iter=1:iteraNum
     for i=1:setnum  
         [flag,Energy,Time,MissError,overSpeed,swp,jerk]=CalcEJT(Population(i,:),0);
         Population(i,:)=swp;		
-		%边界测试
-		
         %测试个体,不符合要求就产生新个体
         if flag~= 0
            Population(i,:)=OldPopulation(i,:);

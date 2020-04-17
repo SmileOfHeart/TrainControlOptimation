@@ -29,8 +29,7 @@ C2=2.0;    %社会加速常数
 MaxFlyVeo=2*TRAVDIS/SWITCHNUM; %最大飞行速度
 iteraNum=10; %迭代次数
 FitNessRate=1;
-enterCountList=zeros(1
-iteraNum);
+enterCountList=zeros(1,iteraNum);
 repNumList=zeros(1,iteraNum);
 avgPersonalFitnessList=[];
 avgGlobalFitnessList=[];
