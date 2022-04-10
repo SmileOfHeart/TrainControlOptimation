@@ -45,7 +45,7 @@ MOPSO算法是采用Pareto最优的形式比较解的优劣的。
 			arginit.m ：初始化线路数据
 	
 注意运行程序时将当前文件夹下所有文件夹添加到Matlab路径
-
+![设置matlab路径](./2022-04-10_165920.png)
 	
 ![代码结构](./code_structure.png)
 
