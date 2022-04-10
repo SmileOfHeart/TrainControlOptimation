@@ -3,7 +3,7 @@ function [E,t]=CacMinTime()
 %返回值：能耗和时间
 global TRAINWGH STARTPOINT ENDPOINT EMAX  TMSTEPLEN Tmin Tmax;
 dt=TMSTEPLEN;
-dv=0.3; %允许速度误差
+dv=0.6; %允许速度误差
 M=TRAINWGH;
 %添加第一个点
 sCurve=[STARTPOINT]; 
@@ -16,7 +16,8 @@ E=0;
 Force=[0];
 Jerk=0;
 while(S<ENDPOINT&&v>0)
-    vLimit=SpeedLimitBrake(S+v*dt);%采样误差，要加v*dt;
+    vLimit = sqrt(2 * (ENDPOINT - S) * 0.8);
+    vLimit = min(SpeedLimitBrake(S+v*dt) - 0.3,vLimit);%采样误差，要加v*dt;
     if v<vLimit-dv
         %在限速曲线误差之下
         Fa=TrateForce(v);
@@ -25,7 +26,7 @@ while(S<ENDPOINT&&v>0)
         E=E+Fa*(vCurve(length(vCurve))+v)/2*dt;
         Force=[Force,Fa];
         Jerk=Jerk+abs(acc);
-    elseif v>vLimit-dv&&v<vLimit-0.1
+    elseif v>vLimit-dv&&v<vLimit-0.3
         %在限速曲线误差范围内,尽量保持匀速
         Fanti=AntiForce(v,S);
         if(TrateForce(v)<Fanti)
