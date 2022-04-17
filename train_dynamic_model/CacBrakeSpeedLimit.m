@@ -1,3 +1,6 @@
+%%
+% 计算考虑制动的限速曲线，限速曲线是通过倒推求解的方式进行计算的，从终点开始，按照最大的可能速度，向起点方向计算
+%%
 function CacBrakeSpeedLimit()
     %计算考虑制动的限速曲线
     global TRAINWGH SPDLIMARRAY TMSTEPLEN splLeft;
@@ -85,15 +88,17 @@ function CacBrakeSpeedLimit()
     plot(sLimitCurve,vLimitCurve,'Marker','o');
 end
 
+%制动时动力学方程
 function dydt=odeBrakeDiffEqu(t,y)
        global TRAINWGH
        dydt=1/(y+0.1)*(-1*BrakeForce(y)-AntiForce(y,t))/TRAINWGH ;
 end
 
+%事件函数，在求解的过程中会存在超限速（splLeft）的情况，如果超出限制速度则停止计算
 function [value,isterminal,direction]=odeEventBrake(t,y)
-     global splLeft %起始点
-     value=y-splLeft;
-     isterminal=1;
-     direction=0;
+     global splLeft %区段左限速
+     value=y-splLeft; 
+     isterminal=1; %中止计算
+     direction=1;  %递增时有效
 end
      
