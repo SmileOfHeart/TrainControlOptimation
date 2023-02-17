@@ -111,9 +111,9 @@ for index=1:n
                 AccRecord=[AccRecord,acc];
                 CurrTime=CurrTime+dt;
                 timeRecord =[timeRecord,CurrTime];
-                if(SpeedLimitBrake(CurrLoc)<CurrVeo)
-                    switchPoint(index)=CurrLoc; %唯一保留的修正项
-                end
+%                 if(SpeedLimitBrake(CurrLoc)<CurrVeo)
+%                     switchPoint(index)=CurrLoc; %唯一保留的修正项
+%                 end
           end
       elseif (state==1)
           %巡航工况 
@@ -239,19 +239,22 @@ end
 Time=CurrTime;
 Jerk=Jerk/Time;
 Energy=Energy-ReGenEnery;
+veoRecord = veoRecord * 3.6; % 转换成km/h
 if optional==1
         hold off;
         figure('Name','运行情况');%打开新窗口
         plot(locRecord,[veoRecord;stateList],'Marker','o');
         xlabel('行驶距离(m)');
-        ylabel('列车运行工况');
+%         ylabel('列车运行工况(m/s)');
+        ylabel('列车运行工况(km/h)');
         hold on;
         plotSpeedLimit();
         plotRoadGrad();
         figure('Name','运行情况-时间');%打开新窗口
         plot(timeRecord,[veoRecord;stateList],'Marker','o');
         xlabel('行驶时间(s)');
-        ylabel('行驶速度(m/s)');
+%         ylabel('行驶速度(m/s)');
+        ylabel('行驶速度(km/h)');
         figure('Name','能耗情况');%打开新窗口
         plot(locRecord,[EnergyRecord;ReGenERecord],'Marker','o');
         xlabel('行驶距离(m)');

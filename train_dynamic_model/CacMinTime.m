@@ -73,7 +73,8 @@ h=figure('Name','考虑制动最小运行时间');%打开新窗口
 plotSpeedLimit();
 plotRoadGrad();
 hold on;
+vCurve = vCurve * 3.6 ; %转换成km/h
 plot(sCurve,vCurve,'Marker','o');
 xlabel('行驶距离(m)');
-ylabel('行驶速度(m/s)');
+ylabel('行驶速度(km/h)');
 end

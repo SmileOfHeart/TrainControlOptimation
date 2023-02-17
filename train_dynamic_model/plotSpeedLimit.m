@@ -16,6 +16,8 @@ function plotSpeedLimit()
     end   
     x(2*n-2)=startPoint(n);
     y(2*n-2)=speedLimit(n-1);
+    
+    y = y * 3.6; % ×ª»»³Ékm/h
     plot(x,y)
     hold on;   
 end
