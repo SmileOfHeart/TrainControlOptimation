@@ -74,4 +74,6 @@ plotSpeedLimit();
 plotRoadGrad();
 hold on;
 plot(sCurve,vCurve,'Marker','o');
+xlabel('行驶距离(m)');
+ylabel('行驶速度(m/s)');
 end

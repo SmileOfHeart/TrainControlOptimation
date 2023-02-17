@@ -5,32 +5,34 @@ global MAXACC MAXBACC INTERDIS TRAINWGH TRAVDIS TRAINLEN COADIS DESINTIME...
     COMFACC...
     SPDLIMARRAY GRAARRAY STARTPOINT ENDPOINT SWITCHNUM ReGenRate ...
     EMAX TMSTEPLEN Tmin stateTable Tmax  upLimit lowLimit;
-TRAINWGH =194.295;                      %列车质量t
+TRAINWGH =428;                      %列车质量t
 MAXACC = 1;                           %最大加速度m/s^2
 MAXBACC = 1;                            %最大减速度m/s^2
 TRAINLEN = 0;                           %列车长度
-COADIS = 30;                            %最小惰行距离m
-COMFACC = 0.5;                          %舒适性加速度变化率(m/s^2)/s
-ReGenRate=0.3;                            %再生制动产能率
+COADIS = 300;                            %最小惰行距离m
+COMFACC = 0.8;                          %舒适性加速度变化率(m/s^2)/s
+ReGenRate=0;                            %再生制动产能率
 EMAX=0;                         %最大运行能耗
 TMSTEPLEN=0.1;                  %仿真时间步长
 Tmin=0;                         %最小运行时间
-Tmax=300;                         %最长运行时间
-DESINTIME= 105;                  %计划时间
+Tmax=2000;                         %最长运行时间
+DESINTIME= 1500;                  %计划时间
 %1宋家庄-肖村段
-SPDLIMARRAY = [173.7,451.2,695.3,1264.6,2686,2806; 55,80,65,80,55,55];  
-% SPDLIMARRAY = [173.7,2806; 80,50];  
-GRAARRAY = [173.7,335,	535,	865,	1525,	2055,	2425,	2625 ;-2,-3,	12,	3.15,-8,3,4.25,	-2 ]; 
+SPDLIMARRAY = [0,25000,40000,80000; 250,220,300,300];  
+GRAARRAY = [0,10000,20000,35000,50000,80000;0,-3,-2,5,8,0 ];
+ENDPOINT=80000;
+STARTPOINT=0;  
+% SPDLIMARRAY = [173.7,2806; 80,50];
 % GRAARRAY = [173.7,	865,	1925,	2425,	2625 ;-2, -15,   -4.25, 0, 2 ]; 
-ENDPOINT=2806;                           %旅行终点
+                         %旅行终点
 % SPDLIMARRAY = [0,2400;80,50];
 % GRAARRAY = [0,2400;0,0];
-STARTPOINT=173.7;                           %旅行起
+                         %旅行起
 %2肖村-小红门站
-% SPDLIMARRAY = [2806,3961,4081; 80,55,0];  
-% GRAARRAY = [2625	2945	3325	3745 ;-2	-3.84	8	2 ]; 
-% STARTPOINT=2806;                        %旅行起点
-% ENDPOINT=4081;                           %旅行终点
+%  SPDLIMARRAY = [2806,3961,4081; 80,55,0];  
+%  GRAARRAY = [2625	2945	3325	3745 ;-2	-3.84	8	2 ]; 
+%  STARTPOINT=2806;                        %旅行起点
+%  ENDPOINT=4081;                           %旅行终点
 %3小红门-旧宫站
 % SPDLIMARRAY = [4081	6044.9		6327	6447;	80	75	55	0];  
 % GRAARRAY = [4115	4375	4535	4975	5375	5975	6225 ;-20	-23.8	-24	0	-2	-3.2	0 ]; 
@@ -39,7 +41,6 @@ STARTPOINT=173.7;                           %旅行起
 %4旧宫站-亦庄桥站
 % SPDLIMARRAY = [6447 6457.6	8309	8429 ;55 80 55 0];  
 % GRAARRAY = [6545	6945	7325	7590	7850;3.25	2.8	-15.6	9	0];
-% GRAARRAY = [6545	6945	7325	7590	7850;0 0 0	0 0];
 % STARTPOINT=6447;                        %旅行起点
 % ENDPOINT=8429;                           %旅行终点
 
@@ -50,11 +51,10 @@ STARTPOINT=173.7;                           %旅行起
 % ENDPOINT=9422;   
 
 %6亦庄文化园站-万源街站
-SPDLIMARRAY = [9302 9423.9	10840	10960;55 80	55	0];  
+% SPDLIMARRAY = [9302 9423.9	10840	10960;55 80	55	0];  
 % GRAARRAY = [9210 9540	9980	10300	10780;0	-2	5	2.96	0];
-GRAARRAY = [9210 9540	9980	10300	10780;0	0	0	0	0];
-STARTPOINT=9422;                        %旅行起点
-ENDPOINT=10960;   
+% STARTPOINT=9422;                        %旅行起点
+% ENDPOINT=10960;   
 
 %7万源街-荣京东街
 % SPDLIMARRAY = [10960 12120 12240 ; 80 55	50];  
@@ -106,21 +106,27 @@ TRAVDIS = INTERDIS + TRAINLEN;          %旅行距离
 
 
 
-if INTERDIS < 4096
+if INTERDIS < 1024
     SWITCHNUM=3;                    %工况转换点数量 必须为偶数
     stateTable=[2,1,0 -2];           %4工况表：2.牵引；1.巡航；0.惰行；-2.制动
-    upLimit  =  [9822  10560 10960];                        %解的上限
-    lowLimit =  [9422  9522  10360];                         %解的下限	    
+    upLimit  =  [200  2200  2400];                        %解的上限
+    lowLimit =  [100  200   2200];                         %解的下限	    
 elseif INTERDIS < 2048
     SWITCHNUM=5;                    %工况转换点数量 必须为偶数
     stateTable=[2,0,2,1,0,-2];           %4工况表：2.牵引；1.巡航；0.惰行；-2.制动
 	upLimit  =  [260  550  600  2500   2806];                        %解的上限
 	lowLimit =  [230  420  450  865    2500];                         %解的下限	
-elseif INTERDIS < 4096
-    SWITCHNUM = 6 ;                    %工况转换点数量 必须为偶数
-    stateTable=[2,1,0,2,1,0,-2];      %8工况表：2.牵引；1.巡航；0.惰行；-2.制动
-	upLimit  =  [260  550  600  1200  2500  2806];                        %解的上限
-	lowLimit =  [230  420  450  865   1200  2500];                         %解的下限	
+elseif INTERDIS < 85000
+%     SWITCHNUM = 6 ;                    %工况转换点数量 必须为偶数
+%     stateTable=[2,0,2,0,2,0,-2];      %8工况表：2.牵引；1.巡航；0.惰行；-2.制动
+%   	upLimit  =  [11000 40000  60000  65000  70000 80000  ];
+%   	%解的上限,允许重合
+%   	lowLimit =  [9000  35000  55100 60000 69000 70000  ]; %解的下限	
+
+  SWITCHNUM = 7; 
+  stateTable=[2,1,0,1,2,1,0,-2];
+  upLimit  =  [6000  23000  35000  45000  56000  76000  80000];
+  lowLimit =  [1500  10000  25000  38000  40100  63000  72000];
 end
 
 

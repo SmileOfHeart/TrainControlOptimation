@@ -189,8 +189,8 @@ end
 %最后一段制动工况
 dt=0.5*TMSTEPLEN; %加速度大，采用小步长
 state=-2;
-if CurrLoc<ENDPOINT-100
-	flag = 1; %提前停车
+if abs(CurrLoc - ENDPOINT) >  (ENDPOINT - STARTPOINT) * 0.1
+	flag = 5; %提前停车
 end
 while(CurrLoc<ENDPOINT) 
         lastAcc=acc;
@@ -226,9 +226,8 @@ end
 %终点超速
 if CurrVeo>maxVeo
   flag=2;
-  return;
 end
-if CurrLoc<ENDPOINT-100
+if abs(CurrLoc - ENDPOINT) >  (ENDPOINT - STARTPOINT) * 0.1
      flag=5;
      return; %终点停车误差,没能到站
 elseif CurrLoc<ENDPOINT
@@ -244,19 +243,27 @@ if optional==1
         hold off;
         figure('Name','运行情况');%打开新窗口
         plot(locRecord,[veoRecord;stateList],'Marker','o');
-        figure('Name','运行情况-时间');%打开新窗口
-        plot(timeRecord,[veoRecord;stateList],'Marker','o');
+        xlabel('行驶距离(m)');
+        ylabel('列车运行工况');
         hold on;
         plotSpeedLimit();
         plotRoadGrad();
+        figure('Name','运行情况-时间');%打开新窗口
+        plot(timeRecord,[veoRecord;stateList],'Marker','o');
+        xlabel('行驶时间(s)');
+        ylabel('行驶速度(m/s)');
         figure('Name','能耗情况');%打开新窗口
         plot(locRecord,[EnergyRecord;ReGenERecord],'Marker','o');
+        xlabel('行驶距离(m)');
+        ylabel('列车功率(KJ)');
         figure('Name','加速度情况');%打开新窗口
         plot(locRecord,[AccRecord],'Marker','o');
+        xlabel('行驶距离(m)');
+        ylabel('列车加速度(m/s^2)');
         figure('Name','功率情况');%打开新窗口
         plot(locRecord,[PowerRecord],'Marker','o');
-        plot(timeRecord,[PowerRecord],'Marker','o');
-        
+        xlabel('行驶距离(m)');
+        ylabel('列车加速度(m/s^2)');
 end
 end
 
