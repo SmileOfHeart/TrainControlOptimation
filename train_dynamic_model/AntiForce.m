@@ -1,7 +1,7 @@
 function f = AntiForce(veo,pos)
-%UNTITLED6 计算附加阻力
-%单位是KN
-%    传入速度单位为m/s
+%UNTITLED6 璁＄畻闄勫姞闃诲姏
+%鍗曚綅鏄疜N
+%    浼犲叆閫熷害鍗曚綅涓簃/s
     M=194.295; 
     u=veo*3.6;
     w0=2.031+0.0622*u+0.001807*u*u;

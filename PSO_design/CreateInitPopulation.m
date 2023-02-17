@@ -11,6 +11,7 @@ global lowLimit upLimit
       population=zeros(setNum,len);
       while n<setNum
              switchPoint = lowLimit + (upLimit -lowLimit).*rand(1,len);
+             switchPoint = sort(switchPoint);
              [flag,~,~,~,~,switchPoint]=CalcEJT(switchPoint,0);
              if(flag==0)
                  population(n+1,:)=switchPoint;

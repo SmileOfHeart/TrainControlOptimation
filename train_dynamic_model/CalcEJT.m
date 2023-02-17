@@ -38,6 +38,7 @@ PowerRecord=[power];
 AccRecord=[acc];
 veoRecord=[CurrVeo];
 locRecord=[CurrLoc];
+timeRecord=[CurrTime];
 %% 边界调整
 for index=1:n
     if switchPoint(index)<STARTPOINT||switchPoint(index)>=ENDPOINT
@@ -74,6 +75,7 @@ for i=1:4
     locRecord=[locRecord,CurrLoc];
     AccRecord=[AccRecord,acc];
     CurrTime=CurrTime+dt;
+    timeRecord =[timeRecord,CurrTime];
 end
 
 
@@ -108,6 +110,7 @@ for index=1:n
                 locRecord=[locRecord,CurrLoc];
                 AccRecord=[AccRecord,acc];
                 CurrTime=CurrTime+dt;
+                timeRecord =[timeRecord,CurrTime];
                 if(SpeedLimitBrake(CurrLoc)<CurrVeo)
                     switchPoint(index)=CurrLoc; %唯一保留的修正项
                 end
@@ -139,6 +142,7 @@ for index=1:n
                 AccRecord=[AccRecord,acc];  
                 PowerRecord=[PowerRecord,power];
                 CurrTime=CurrTime+dt;
+                timeRecord =[timeRecord,CurrTime];
           end
       elseif(state==0)
           %惰行工况
@@ -167,6 +171,7 @@ for index=1:n
                 AccRecord=[AccRecord,acc];
                 PowerRecord=[PowerRecord,power];
                 CurrTime=CurrTime+dt;
+                timeRecord =[timeRecord,CurrTime];
                 if(CurrVeo<minVeo)
                     flag=1;
                     return;
@@ -190,7 +195,7 @@ end
 while(CurrLoc<ENDPOINT) 
         lastAcc=acc;
         MaxAcc=(-1*BrakeForce(CurrVeo)-AntiForce(CurrVeo,CurrLoc))/TRAINWGH;
-        targetAcc =max( -0.5*CurrVeo^2/(ENDPOINT-CurrLoc),MaxAcc);
+        targetAcc = max( -0.5*CurrVeo^2/(ENDPOINT-CurrLoc),MaxAcc);
         if(abs(targetAcc-acc)>dadt*dt*4)
             acc=sign(targetAcc-acc)*2*dadt*dt+acc;
         else
@@ -199,6 +204,7 @@ while(CurrLoc<ENDPOINT)
         CurrVeo=Adams4(CurrVeo,acc,AccRecord,dt);
         CurrLoc=Adams4(CurrLoc,CurrVeo,veoRecord,dt);
         power=(AntiForce(CurrVeo,CurrLoc)+acc*TRAINWGH)*CurrVeo*ReGenRate;
+        power=(-1*BrakeForce(CurrVeo))*CurrVeo;
         ReGenEnery=Adams4(ReGenEnery,power,PowerRecord,dt);%能耗近似，忽略转折衔接那一块
         Jerk=Jerk+abs(lastAcc-acc);
         overSpeed=overSpeed+max(CurrVeo-SpeedLimitBrake(CurrLoc),0); 
@@ -211,6 +217,7 @@ while(CurrLoc<ENDPOINT)
         AccRecord=[AccRecord,acc]; 
         PowerRecord=[PowerRecord,power];
         CurrTime=CurrTime+dt;
+        timeRecord =[timeRecord,CurrTime];
         %事件
         if(CurrVeo<0.1)
             break;
@@ -234,8 +241,11 @@ Time=CurrTime;
 Jerk=Jerk/Time;
 Energy=Energy-ReGenEnery;
 if optional==1
+        hold off;
         figure('Name','运行情况');%打开新窗口
         plot(locRecord,[veoRecord;stateList],'Marker','o');
+        figure('Name','运行情况-时间');%打开新窗口
+        plot(timeRecord,[veoRecord;stateList],'Marker','o');
         hold on;
         plotSpeedLimit();
         plotRoadGrad();
@@ -245,6 +255,7 @@ if optional==1
         plot(locRecord,[AccRecord],'Marker','o');
         figure('Name','功率情况');%打开新窗口
         plot(locRecord,[PowerRecord],'Marker','o');
+        plot(timeRecord,[PowerRecord],'Marker','o');
         
 end
 end
