@@ -10,7 +10,7 @@ CacBrakeSpeedLimit();
 
 %多目标粒子群算法参数
 options.PopulationSize = 10;  %种群大小  
-options.MaxGenerations = 100;  %算法最大迭代次数
+options.MaxGenerations = 10;  %算法最大迭代次数
 options.Continue = 0 ;  %是否继续原来的优化，如果要继续则要传入种群options.Pop和速度参数options.Veo
 %正式开始优化
 for num=1:1

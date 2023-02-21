@@ -85,7 +85,8 @@ function CacBrakeSpeedLimit()
     plotSpeedLimit();
     plotRoadGrad();
     hold on;
-    plot(sLimitCurve,vLimitCurve,'Marker','o');
+%     plot(sLimitCurve,vLimitCurve,'Marker','o');
+    plot(sLimitCurve,vLimitCurve * 3.6,'Marker','o');
 end
 
 %制动时动力学方程

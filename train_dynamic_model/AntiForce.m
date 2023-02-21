@@ -1,13 +1,14 @@
 function f = AntiForce(veo,pos)
-%UNTITLED6 璁＄畻闄勫姞闃诲姏
-%鍗曚綅鏄疜N
-%    浼犲叆閫熷害鍗曚綅涓簃/s
-    M=194.295; 
+%UNTITLED6 计算附加阻力
+%单位是KN
+%    传入速度单位为m/s
+    M=428;
+   % u=veo;
     u=veo*3.6;
-    w0=2.031+0.0622*u+0.001807*u*u;
+    w0=0.66+0.00245*u+0.000132*u*u;
     wi=RoadGradinet(pos);
     %wr
     %ws
-    f=(w0+wi)*M*9.8/1000;
+    f=(w0+wi)*M*9.8/1000;%单位是KN
 end
 

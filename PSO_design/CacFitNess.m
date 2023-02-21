@@ -29,6 +29,6 @@ if abs(MissError)<10
 else
     y(5)=101/(MissError^2+1);    
 end
-fitness = 10*y(1)+5*y(2)+y(3)+10*y(4)+20*y(5);
+fitness = 10*y(1)+100*y(2)+y(3)+10*y(4)+20*y(5);
 end
 
